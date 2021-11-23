@@ -6,15 +6,18 @@ import {Route, Switch} from 'react-router-dom';
 import Details from './Details';
 import NotFound from "./NotFound";
 import { useDispatch, useSelector } from 'react-redux';
-import {} from './redux/modules/bucket';
-import {createBucket} from './redux/modules/bucket';
+import {createBucket, loadBucket, loadBucketFB,addBucketFB} from './redux/modules/bucket';
 import Progress from "./Progress";
+//firebase start
+import {db} from './firebase';
+import {collection,getDoc, getDocs, addDoc, doc, updateDoc,deleteDoc} from 'firebase/firestore';
 
 function App() {
 
     const [list, setList] = React.useState(["영화관 가기", "매일 책읽기", "수영 배우기"]);
     const text = React.useRef(null);
 
+   
     // useDispatch 사용법 
     // create 완성 후 이제 추가하기 버튼 만들 때 import useDispatch  먼저 한다
     // 객체를 가지고 얘를 활용할거임
@@ -22,8 +25,37 @@ function App() {
 
     // const data = useSelector((state)=> state);
     // console.log(data);
+    ;
+    React.useEffect(()=>{
+      dispatch(loadBucketFB());
+    },[]);
 
+   // React.useEffect(async()=>{
+      
+    //  console.log(db);
+      // collection 정보 만들기
+      // collection(db, "bucket")
+      // const query = await getDocs(collection(db, "bucket")) ;
+      // console.log(query);
+      // query.forEach((doc)=>{
+      //   console.log(doc.id, doc.data());
+      // });
 
+      // 추가하기
+      //addDoc(collection(db, 'bucket'), {text: 'new', completed:false});
+
+      // 수정하기
+      //const docRef = doc(db,'bucket', '8iP5bOMoVVj3iJGNY5jy');
+      //updateDoc(docRef,{completed:true});
+
+      // 삭제하기
+      //const docRef = doc(db,'bucket', 'tmPYKsr0br8VDo76aCgW');
+      //deleteDoc(docRef);
+
+      // 새로운 컬렉션 만들기, 콜렉션 명 쓰는 곳에 다른 이름 적으면 됨
+      //addDoc(collection(db,'buckets'),{text:'new', completed:false});
+
+   // },[]);
     //추가하기 버튼에 걸린 함수 찾기
     const addBucketList = () => {
         // 스프레드 문법! 기억하고 계신가요? :) 원본 배열 list에 새로운 요소를 추가해주었습니다.
@@ -36,7 +68,9 @@ function App() {
         //action 일으킬 준비하기
        //action 생성 함수를 이용해서 dispatch() 사용하기       
        
-       dispatch(createBucket({text: text.current.value, compelted:false}));
+      //  dispatch(createBucket({text: text.current.value, compelted:false}));
+
+      dispatch(addBucketFB({text: text.current.value, compelted:false}));
        
        
 

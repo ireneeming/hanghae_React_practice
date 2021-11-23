@@ -1,12 +1,14 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+
 import bucket from './modules/bucket';
-
 //rootReducer => 리듀서들을 묶은 것
+const middlewares = [thunk];
 const rootReducer = combineReducers({bucket});
+const enhancer = applyMiddleware(...middlewares);
 
 
-
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, enhancer);
 
 export default store;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import { deleteBucket ,updateBucket } from './redux/modules/bucket';
+import { deleteBucket   , updateBucketFB, deleteBucketFB} from './redux/modules/bucket';
 
 
 const Details = (props) => {
@@ -17,14 +17,16 @@ const Details = (props) => {
 //    console.log(bucket_list[bucket_index]);
     return (
         <div> 
-            <h1>{bucket_list[bucket_index].text}</h1>
+            <h1>{bucket_list[bucket_index] ? bucket_list[bucket_index].text : "" }</h1>
             <button onClick={()=>{
-                dispatch(updateBucket(bucket_index));
-                history.goBack();
+                //dispatch(updateBucket(bucket_index));
+                dispatch(updateBucketFB(bucket_list[bucket_index].id));
+               
             }}>완료하기</button>
             <button onClick ={()=>{ 
-                console.log('삭제하기 버튼 누르기');
-                dispatch(deleteBucket(bucket_index));
+                //console.log('삭제하기 버튼 누르기');
+                //dispatch(deleteBucket(bucket_index));
+                dispatch(deleteBucketFB(bucket_list[bucket_index].id));
                 history.goBack();
             }}>삭제하기</button>
         </div>

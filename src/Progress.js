@@ -2,19 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-const Progress = ()=>{
+const Progress = (props)=>{
 
     const bucket_list = useSelector((state)=> state.bucket.list);
     let count = 0 ;
 
-    bucket_list.map((b,index)=>{
+    bucket_list && bucket_list.map((b,idx) => {
         if(b.completed){
             count++;
         }
     });
     return (
         <PrgBar>
-            <HightLight width={(count/bucket_list.length)*100 + '%'}>
+            <HightLight width={(count / bucket_list.length )*100 + '%'}>
              <Circle />
             </HightLight>
         </PrgBar>
